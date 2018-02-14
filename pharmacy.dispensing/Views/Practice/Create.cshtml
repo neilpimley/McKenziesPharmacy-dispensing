@@ -1,0 +1,57 @@
+﻿@model Pharmacy.DAL.Practice
+
+@{
+    ViewBag.Title = "Create Practice";
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PracticeName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PracticeName)
+            @Html.ValidationMessageFor(model => model.PracticeName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AddressID, "Address")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("AddressID", String.Empty)
+            @Html.ValidationMessageFor(model => model.AddressID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmailAddress)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EmailAddress)
+            @Html.ValidationMessageFor(model => model.EmailAddress)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreatedOn)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreatedOn)
+            @Html.ValidationMessageFor(model => model.CreatedOn)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ModifiedOn)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ModifiedOn)
+            @Html.ValidationMessageFor(model => model.ModifiedOn)
+        </div>
+
+            <input type="submit" value="Save" class="btn btn-success active" />
+             @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary", role = "button" })
+    </fieldset>
+}
+

@@ -1,0 +1,45 @@
+﻿@model Pharmacy.DAL.Practice
+
+@{
+    ViewBag.Title = "Practice Details";
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+<fieldset>
+
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PracticeName)
+    </div>
+
+    <div class="display-label">Address</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Address.AddressLine1)
+    </div>
+
+    <div class="display-label">EmailAddress</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EmailAddress)
+    </div>
+
+    <div class="display-label">Doctors</div>
+    <div class="display-field">
+        @foreach (var doctor in Model.Doctors)
+        {
+            @Html.DisplayFor(d => doctor.Title.TitleName) @Html.Raw(" ") @Html.DisplayFor(d => doctor.Surname) <br />
+        }
+    </div>
+
+    <div class="display-label">CreatedOn</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatedOn)
+    </div>
+
+    <div class="display-label">ModifiedOn</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ModifiedOn)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PracticeID }, new { @class = "btn btn-warning active", role = "button" }) 
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary active", role = "button" })
+</p>

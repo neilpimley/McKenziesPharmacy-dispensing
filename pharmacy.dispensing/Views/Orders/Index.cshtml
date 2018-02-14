@@ -1,0 +1,118 @@
+﻿@model List<Pharmacy.dispensing.Models.ViewOrder>
+@{
+    ViewBag.Title = "Orders " + ViewBag.TitleExt;
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+									
+    @Html.Partial("_Menu")
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Order Date
+        </th>
+        <th>
+            Customer
+        </th>
+        <th>
+            Shop
+        </th>
+        <th>
+            Surgery / Doctor
+        </th>
+        <th>
+            Items
+        </th>
+         <th>
+            
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr data-orderid="@item.Order.OrderID">
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.OrderDate)
+        </td>
+        <td>
+            @Html.ActionLink(item.Customer.Title + " " + item.Customer.Firstname + " " + item.Customer.Lastname, "Details", "Customer", new { id = item.Customer.UserID }, new { title = "click to view customer details" })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Shop.ShopName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.Doctor.Practice.PracticeName) /
+            @Html.DisplayFor(modelItem => item.Customer.Doctor.Title.TitleName)
+            @Html.DisplayFor(modelItem => item.Customer.Doctor.Firstname)
+            @Html.DisplayFor(modelItem => item.Customer.Doctor.Surname)
+        </td>
+        <td>
+            @foreach (var orderline in item.Order.OrderLines)
+            {
+                @Html.DisplayFor(o => orderline.DrugName)
+                if (item.Order.OrderStatus == 5)
+                {
+                    <input type="checkbox" @(orderline.OrderLineStatus == 3 ? "checked" : "") class="orderline-checkbox" data-orderid="@orderline.OrderID" data-orderlineid="@orderline.OrderLineID" data-drug="@orderline.DrugName" />
+                
+                }
+                @Html.Raw("<br />")
+            }
+            @if (item.Order.OrderStatus == 5)
+            {
+                <button class="btn btn-success process-order-button btn-xs" disabled="disabled" data-orderid="@item.Order.OrderID" data-toggle="modal">Process</button>
+            }    
+            else if (item.Order.OrderStatus == 6)
+            {
+                <button class="btn btn-danger delete-order-button btn-xs" data-orderid="@item.Order.OrderID">Delete</button>
+                <button class="btn btn-info recollect-order-button btn-xs"  data-orderid="@item.Order.OrderID">Recollect</button>
+            }
+        </td>
+        <td> 
+            @switch (item.Order.OrderStatus)
+            {
+                case 4:
+                    {
+                    @Html.Raw("Ordered on :<br />" + item.StatusChangedDate)
+                        break;
+                    }
+                case 5:
+                    {
+                    @Html.Raw("Picked up on :<br />" + item.StatusChangedDate + " ")
+                        break;
+                    }
+                case 7:
+                    {
+                    @Html.Raw("Read to be delivered on :<br />" + item.StatusChangedDate + " ")
+                    @Html.ActionLink("Ready to collect", "Process", new { id = item.Order.OrderID, status = 8 }, new { @class = "btn btn-primary btn-xs active", role="button" })   
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }                
+        </td>
+    </tr>
+}
+
+</table>
+								 
+								<!-- Modal -->
+								<div id="ProcessModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+								  <div class="modal-content">
+								  <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<h4 class="modal-title">Reason for missing items</h4>
+								  </div>
+								  <div class="modal-body">
+									<textarea class="form-control" rows="10" placeholder="Textarea" id="noteText"></textarea>
+                                    <label class="label-warning">This message will be sent to the customer</label>
+								  </div>
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+									<button type="button" class="btn btn-primary">Save changes</button>
+								  </div>
+								</div>
+								</div>
+								</div>

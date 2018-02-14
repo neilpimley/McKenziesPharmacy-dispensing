@@ -1,0 +1,107 @@
+﻿@model IEnumerable<Pharmacy.dispensing.Models.CustomerPoco>
+
+@{
+    ViewBag.Title = "Customers";
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Firstname
+        </th>
+        <th>
+            Lastname
+        </th>
+        <th>
+            Sex
+        </th>
+        <th>
+            Mobile
+        </th>
+        <th>
+            Home
+        </th>
+        <th>
+            Dob
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            Doctor
+        </th>
+        <th>
+            Pharmacy
+        </th>
+        <th>
+            CreatedOn
+        </th>
+        <th>
+            Last changed on
+        </th>
+        <th>
+            Active
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title.TitleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lastname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sex)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mobile)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Home)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dob)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.AddressLine1)
+        </td>
+        <td>
+            @Html.ActionLink(item.Doctor.Title.TitleName + " " + item.Doctor.Firstname + " " + item.Doctor.Surname,"Details","Doctor", new { id =  item.Doctor.DoctorID }, new { title = "click to view doctors details" })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Shop.ShopName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Active)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit","AdminCustomer", new { id = item.CustomerID}, new { @class = "btn btn-primary btn-xs active", role="button" }) 
+            @Html.ActionLink("Details", "Details", "AdminCustomer", new { id = item.CustomerID }, new { @class = "btn btn-warning btn-xs active", role = "button" }) 
+            @Html.ActionLink("Delete", "Delete", "AdminCustomer", new { id = item.CustomerID},new { @class = "btn btn-danger btn-xs active", role = "button" })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,47 @@
+﻿@model ShopPoco
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<fieldset>
+
+    <div class="display-label">ShopName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ShopName)
+    </div>
+
+    <div class="display-label">Phone</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Phone)
+    </div>
+
+    <div class="display-label">Fax</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Fax)
+    </div>
+
+    <div class="display-label">Email</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Email)
+    </div>
+
+    <div class="display-label">Address</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Address.AddressLine1)
+    </div>
+
+    <div class="display-label">CreatedOn</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatedOn)
+    </div>
+
+    <div class="display-label">ModifiedOn</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ModifiedOn)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ShopId }, new { @class = "btn btn-warning active", role = "button" }) 
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success active", role = "button" })
+</p>

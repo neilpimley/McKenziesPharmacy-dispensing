@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  pharmacy.dispensing:
+    image: pharmacy.dispensing
+    build:
+      context: ./pharmacy.dispensing
+      dockerfile: Dockerfile

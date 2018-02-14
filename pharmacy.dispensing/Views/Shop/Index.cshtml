@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ShopPoco>
+
+@{
+    ViewBag.Title = "Shops";
+    
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            ShopName
+        </th>
+        <th>
+            Phone
+        </th>
+        <th>
+            Fax
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            CreatedOn
+        </th>
+        <th>
+            ModifiedOn
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShopName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.AddressLine1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedOn)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ShopId }, new { @class = "btn btn-warning btn-xs active", role = "button" }) 
+            @Html.ActionLink("Details", "Details", new { id = item.ShopId }, new { @class = "btn btn-primary btn-xs active", role = "button" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.ShopId }, new { @class = "btn btn-danger btn-xs active", role = "button" })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,109 @@
+﻿@model Pharmacy.dispensing.Models.CustomerPoco
+
+@{
+    ViewBag.Title = "Edit Customer";
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("Edit", "AdminCustomer", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.ValidationSummary(true)
+        
+        @Html.HiddenFor(model => model.CustomerID)
+        @Html.HiddenFor(model => model.UserID)
+
+        <div class="form-group">
+	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Email)</label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", required = "" })
+                @Html.ValidationMessageFor(m => m.Email, "Please enter a customers email")
+            </div>
+        </div>
+
+        <div class="form-group">
+	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Title)</label>
+	        <div class="col-md-1">
+                 @Html.DropDownList("TitleID", null, "--choose--", new { @class = "form-control", required = "" })
+                 @Html.ValidationMessageFor(m => m.TitleID, "Please choose a title")
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.Firstname, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Firstname, "Please enter the customers first name")
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.Lastname, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Lastname, "Please enter the customers last name")
+            </div>
+        </div>
+
+         <div class="form-group">
+	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Sex)</label>
+            <div class="col-md-1">
+                @Html.TextBoxFor(model => model.Sex, new { @class = "form-control", required = "" })
+                @Html.ValidationMessageFor(m => m.Sex, "Please enter a customers gender")
+            </div>
+
+        </div>
+        <div class="form-group">
+	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Mobile)</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", required = "" })
+                @Html.ValidationMessageFor(m => m.Mobile)
+            </div>
+        </div>
+
+         <div class="form-group">
+	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Home)</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.Home, new { @class = "form-control", required = "" })
+                @Html.ValidationMessageFor(m => m.Home)
+            </div>
+        </div>
+         
+         <div class="form-group">
+	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Dob)</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.Dob, new { @class = "form-control", required = "" })
+                @Html.ValidationMessageFor(m => m.Dob)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">@Html.LabelFor(model => model.AddressID, "Address")</label>
+            <div class="col-md-2">
+                @Html.DropDownList("AddressID", null, "--choose--", new { @class = "form-control", required = "" })
+                @Html.ValidationMessageFor(model => model.AddressID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">@Html.LabelFor(model => model.DoctorID, "Doctor")</label>
+            <div class="col-md-2">
+                @Html.DropDownList("DoctorID", null, "--choose--", new { @class = "form-control", required = "" })
+                @Html.ValidationMessageFor(model => model.DoctorID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">@Html.LabelFor(model => model.Active)</label>
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.Active, null, new { @class = "form-control", required = "" })
+                @Html.ValidationMessageFor(model => model.Active)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 col-md-offset-3">
+                <button class="btn btn-success active">Save</button>
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary", role = "button" })
+            </div>
+        </div>
+    
+}
+
+
+
+

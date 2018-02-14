@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pharmacy.dispensing", "pharmacy.dispensing\pharmacy.dispensing.csproj", "{68D7AFF0-CF42-4732-9B34-8CEB6AA5D023}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CBDF5EDD-1B7C-4C2E-B62A-3583EB6864E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68D7AFF0-CF42-4732-9B34-8CEB6AA5D023}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68D7AFF0-CF42-4732-9B34-8CEB6AA5D023}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68D7AFF0-CF42-4732-9B34-8CEB6AA5D023}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68D7AFF0-CF42-4732-9B34-8CEB6AA5D023}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBDF5EDD-1B7C-4C2E-B62A-3583EB6864E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBDF5EDD-1B7C-4C2E-B62A-3583EB6864E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBDF5EDD-1B7C-4C2E-B62A-3583EB6864E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBDF5EDD-1B7C-4C2E-B62A-3583EB6864E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6A5219EA-2725-4831-9AE1-35D2C682B767}
+	EndGlobalSection
+EndGlobal

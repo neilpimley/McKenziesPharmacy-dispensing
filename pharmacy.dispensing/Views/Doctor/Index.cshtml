@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Pharmacy.dispensing.Models.DoctorPoco>
+
+@{
+    ViewBag.Title = "Doctors";
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success active", role = "button" })
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.ActionLink("Doctor", "Index", new { OrderByPractice = false })
+        </th>
+        <th>
+            @Html.ActionLink("Practice", "Index", new { OrderByPractice = true })
+        </th>
+        <th>
+            CreatedOn
+        </th>
+        <th>
+            ModifiedOn
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title.TitleName) @Html.DisplayFor(modelItem => item.Firstname) @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+             @Html.ActionLink(item.Practice.PracticeName, "Details", "Practice", new { id = item.PracticeID }, null) 
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedOn)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.DoctorID }, new { @class = "btn btn-primary btn-xs active", role = "button" }) 
+            @Html.ActionLink("Details", "Details", new { id = item.DoctorID }, new { @class = "btn btn-warning btn-xs active", role = "button" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.DoctorID }, new { @class = "btn btn-danger btn-xs active", role = "button" })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,66 @@
+﻿@model Pharmacy.dispensing.Models.PracticesModel
+
+@{
+    ViewBag.Title = "Practices";
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success active", role = "button" })
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            PracticeName
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            EmailAddress
+        </th>
+        <th>
+            Doctors
+        </th>
+        <th>
+            CreatedOn
+        </th>
+        <th>
+            ModifiedOn
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var practice in Model.Practices) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => practice.PracticeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => practice.Address.AddressLine1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => practice.EmailAddress)
+        </td>
+        <td>
+            @foreach (var doctor in Model.Doctors.Where(p => p.PracticeID == practice.PracticeID)) {
+                @Html.DisplayFor(d => doctor.Title.TitleName) @Html.Raw(" ") @Html.DisplayFor(d => doctor.Surname)<br />
+            }
+             @Html.ActionLink("Edit", "Edit", new { id = practice.PracticeID })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => practice.CreatedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => practice.ModifiedOn)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = practice.PracticeID }, new { @class = "btn btn-warning btn-xs active", role = "button" }) 
+            @Html.ActionLink("Details", "Details", new { id = practice.PracticeID }, new { @class = "btn btn-primary btn-xs active", role = "button" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = practice.PracticeID }, new { @class = "btn btn-danger btn-xs active", role = "button" })
+        </td>
+    </tr>
+}
+
+</table>

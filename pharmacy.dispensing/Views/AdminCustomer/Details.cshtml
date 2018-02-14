@@ -1,0 +1,97 @@
+﻿@model Pharmacy.dispensing.Models.CustomerPoco
+
+@{
+    ViewBag.Title = "Customer Details";
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+<form class="form-horizontal" role="form">
+    <div class="form-group">
+	    <label class="col-md-3 control-label">Email</label>
+        <div class="col-md-3">
+        @Html.DisplayFor(model => model.Email)
+        </div>
+    </div>
+
+    <div class="form-group">
+	    <label class="col-md-3 control-label">Customer</label>
+        <div class="col-md-3">
+        @Html.DisplayFor(model => model.Title.TitleName)
+        @Html.DisplayFor(model => model.Firstname)
+        @Html.DisplayFor(model => model.Lastname)
+        </div>
+    </div>
+
+    <div class="form-group">
+	    <label class="col-md-3 control-label">Sex</label>
+        <div class="col-md-3">
+            @Html.DisplayFor(model => model.Sex)
+        </div>
+    </div>
+
+    <div class="form-group">
+	    <label class="col-md-3 control-label">Mobile</label>
+        <div class="col-md-3">
+        @Html.DisplayFor(model => model.Mobile)
+        </div>
+    </div>
+
+    <div class="form-group">
+	    <label class="col-md-3 control-label">Home</label>
+        <div class="col-md-3">
+            @Html.DisplayFor(model => model.Home)
+        </div>
+    </div>
+
+    <div class="form-group">
+	    <label class="col-md-3 control-label">Dob</label>
+        <div class="col-md-3">
+        @Html.DisplayFor(model => model.Dob)
+        </div>
+    </div>
+
+    <div class="form-group">
+	    <label class="col-md-3 control-label">Address</label>
+        <div class="col-md-3">
+        @Html.DisplayFor(model => model.Address.AddressLine1)
+        </div>
+    </div>
+
+    <div class="form-group">
+	    <label class="col-md-3 control-label">Doctor</label>
+        <div class="col-md-3">
+        @Html.DisplayFor(model => model.Doctor.Title.TitleName)
+        @Html.DisplayFor(model => model.Doctor.Firstname)
+        @Html.DisplayFor(model => model.Doctor.Surname)
+        </div>
+    </div>
+
+
+    <div class="form-group">
+	    <label class="col-md-3 control-label">CreatedOn</label>
+        <div class="col-md-3">
+            @Html.DisplayFor(model => model.CreatedOn)
+        </div>
+    </div>
+
+    <div class="form-group">
+	    <label class="col-md-3 control-label">ModifiedOn</label>
+        <div class="col-md-3">
+            @Html.DisplayFor(model => model.ModifiedOn)
+        </div>
+    </div>
+
+    <div class="form-group">
+	    <label class="col-md-3 control-label">Active</label>
+        <div class="col-md-3">
+            @Html.DisplayFor(model => model.Active)
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-md-3 col-md-offset-3">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerID }, new { @class = "btn btn-warning active", role = "button" }) 
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary active", role = "button" })
+        </div>
+    </div>
+</form>

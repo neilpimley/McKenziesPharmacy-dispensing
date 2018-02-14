@@ -1,0 +1,52 @@
+﻿@model Pharmacy.dispensing.Models.DoctorPoco
+
+@{
+    ViewBag.Title = "Edit Doctor";
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        
+        @Html.HiddenFor(model => model.DoctorID)
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TitleID, "Title")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("TitleID", String.Empty)
+            @Html.ValidationMessageFor(model => model.TitleID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Firstname)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Firstname)
+            @Html.ValidationMessageFor(model => model.Firstname)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Surname)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Surname)
+            @Html.ValidationMessageFor(model => model.Surname)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PracticeID, "Practice")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("PracticeID", String.Empty)
+            @Html.ValidationMessageFor(model => model.PracticeID)
+        </div>
+
+                   <input type="submit" value="Save" class="btn btn-success active" />
+             @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary", role = "button" })
+
+    </fieldset>
+}

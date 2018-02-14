@@ -1,0 +1,7 @@
+﻿            @Html.ActionLink("Print Orders", "Collections", null, new { @class = "btn btn-warning no-print", role = "button" }) 
+            @Html.ActionLink("Ordered directly", "Index", new { status = 4 }, new { @class = "btn btn-default no-print", role = "button" }) 
+            @Html.ActionLink("Collected", "Index", new { status = 5 }, new { @class = "btn btn-success no-print", role = "button" }) 
+            @Html.ActionLink("Not Collected", "Index", new { status = 6 }, new { @class = "btn btn-info no-print", role = "button" }) 
+            @Html.ActionLink("Problem Script", "Index", new { status = 99 }, new { @class = "btn btn-danger no-print", role = "button" }) 
+            @Html.ActionLink("Add RX Collection", "AddScriptToCollect", "Orders", null, new { @class = "btn btn-primary no-print", role = "button" }) 
+

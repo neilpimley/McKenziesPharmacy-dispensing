@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>aspnet-pharmacy.base-21CA7D65-9F2A-4709-8A67-61A5FFCFAD37</UserSecretsId>
+    <WebProject_DirectoryAccessLevelKey>0</WebProject_DirectoryAccessLevelKey>
+    <DockerComposeProjectPath>..\McKenziesPharmacy-dispensing\docker-compose.dcproj</DockerComposeProjectPath>
+    <AssemblyName>pharmacy.dispensing</AssemblyName>
+    <RootNamespace>Pharmacy.Dispensing</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="McKenzies.Pharmacy.Models" Version="1.0.0-CI00019" />
+    <PackageReference Include="McKenzies.Pharmacy.Repositories" Version="1.0.0-CI00019" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+</Project>

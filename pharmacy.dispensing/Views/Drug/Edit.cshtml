@@ -1,0 +1,46 @@
+﻿@model Pharmacy.DAL.Drug
+
+@{
+    ViewBag.Title = "Edit Drug";
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+
+        @Html.HiddenFor(model => model.DrugID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DrugName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DrugName)
+            @Html.ValidationMessageFor(model => model.DrugName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DrugDose)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DrugDose)
+            @Html.ValidationMessageFor(model => model.DrugDose)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PackSize)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PackSize)
+            @Html.ValidationMessageFor(model => model.PackSize)
+        </div>
+
+     
+                   <input type="submit" value="Save" class="btn btn-success active" />
+             @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary", role = "button" })
+
+    </fieldset>
+}
+
+

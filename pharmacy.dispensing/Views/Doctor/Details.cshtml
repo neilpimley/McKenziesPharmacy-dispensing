@@ -1,0 +1,34 @@
+﻿@model Pharmacy.dispensing.Models.DoctorPoco
+
+@{
+    ViewBag.Title = "Doctor Details";
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+
+<fieldset>
+    
+    <div class="display-label">Doctor</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title.TitleName) @Html.DisplayFor(model => model.Firstname) @Html.DisplayFor(model => model.Surname)
+    </div>
+
+    <div class="display-label">Practice</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Practice.PracticeName)
+    </div>
+
+    <div class="display-label">CreatedOn</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatedOn)
+    </div>
+
+    <div class="display-label">ModifiedOn</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ModifiedOn)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DoctorID }, new { @class = "btn btn-warning active", role = "button" }) 
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary active", role = "button" })
+</p>

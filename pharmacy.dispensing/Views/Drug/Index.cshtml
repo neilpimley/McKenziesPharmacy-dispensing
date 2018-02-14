@@ -1,0 +1,90 @@
+﻿@model PagedList.IPagedList<Pharmacy.DAL.Drug>
+
+@{
+    ViewBag.Title = "Drugs";
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+
+
+ <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" id="searchString" name="searchString">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success active", role = "button" })
+</form>
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            DrugName
+        </th>
+        <th>
+            PackSize
+        </th>
+        <th>
+            CreatedOn
+        </th>
+        <th>
+            ModifiedOn
+        </th>
+        <th>
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DrugName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PackSize)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedOn)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.DrugID }, new { @class = "btn btn-primary btn-xs active", role = "button" }) 
+            @Html.ActionLink("Details", "Details", new { id = item.DrugID }, new { @class = "btn btn-warning btn-xs active", role = "button" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.DrugID }, new { @class = "btn btn-danger btn-xs active", role = "button" })
+        </td>
+    </tr>
+}
+
+</table>
+<p>
+
+    @if (Model.HasPreviousPage)
+    { 
+        @Html.Raw(" "); 
+        @Html.ActionLink("First", "Index", new { currentFilter = ViewBag.CurrentFilter, page = 1 })
+        @Html.Raw(" "); 
+        @Html.ActionLink("<< Prev", "Index", new { currentFilter = ViewBag.CurrentFilter, page = Model.PageNumber - 1 } )
+    }
+    else
+    { 
+        @Html.Raw("First");
+        @Html.Raw(" "); 
+        @Html.Raw("<< Prev");
+    } 
+      
+    @if (Model.HasNextPage)
+    { 
+        @Html.ActionLink("Next >>", "Index", new { currentFilter = ViewBag.CurrentFilter, page = Model.PageNumber + 1 }) 
+        @Html.Raw(" "); 
+        @Html.ActionLink("Last", "Index", new { currentFilter = ViewBag.CurrentFilter, page = Model.PageCount }) 
+     }
+    else
+    { 
+        @Html.Raw("Next >>");
+        @Html.Raw(" "); 
+        @Html.Raw("Last");
+    } 
+
+</p>
+

@@ -1,0 +1,61 @@
+﻿@model List<McKenzies.Admin.Models.ScriptCollection>
+@{
+    Layout = null;
+}
+   <itext pagesize="A4" layout="landscape">
+@{ 
+    
+    var i = 0;
+    foreach (var practice in Model)
+    {
+       
+            <paragraph style="font-family:Arial;font-size:18;">
+                <chunk>@practice.Practice</chunk>
+            </paragraph>
+    
+            <newline />
+    
+            <table width="100%" cellpadding="1.0" cellspacing="1.0"  widths="5;5;5;5;5;5" border="1.0">
+            <row>
+                <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true">Date</cell>
+                <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true">Customer</cell>
+                <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true">Address</cell>
+                <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true">No. items</cell>
+                <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true">Items</cell>
+                <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true">Notes</cell>
+             </row>
+            @foreach (var script in practice.Scripts)
+            { 
+            <row>
+                <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true">@script.OrderDate.ToShortDateString()</cell>
+                <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true">@script.Customer</cell>
+                <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true">@script.CustomerAddress</cell>
+                <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true">@script.NumItems items</cell>
+                <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true">
+                @{
+                if (script.Items != null)
+                {
+                    foreach (var orderline in script.Items)
+                    {
+                            @Html.DisplayFor(o => orderline.Drug.DrugName) 
+                            @Html.Raw("<br />")
+                    }
+                }
+                }
+                </cell>
+                <cell borderwidth="0.5" left="true" right="true" top="true" bottom="true">@script.Notes</cell>
+             </row>
+            }
+            </table>  
+            <newpage />
+    }
+  
+} 
+        </itext>
+
+
+
+
+
+    
+       

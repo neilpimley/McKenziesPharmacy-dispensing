@@ -1,0 +1,51 @@
+﻿@model Pharmacy.dispensing.Models.PracticesModel
+
+@{
+    ViewBag.Title = "Edit Practice";
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+
+        @Html.HiddenFor(model => model.Practice.PracticeID)
+
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Practice.PracticeName)
+            @Html.ValidationMessageFor(model => model.Practice.PracticeName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Practice.AddressID, "Address")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("AddressID", String.Empty)
+            @Html.ValidationMessageFor(model => model.Practice.AddressID)
+        </div>
+
+        <div class="editor-label">Doctors</div>
+        <div class="editor-field">
+            @foreach (var doctor in Model.Doctors.Where(p => p.PracticeID == Model.Practice.PracticeID))
+            {
+                @Html.DisplayFor(d => doctor.Title.TitleName) @Html.Raw(" ") @Html.DisplayFor(d => doctor.Surname) @:&nbsp; @Html.ActionLink("Remove", "RemoveFromPractice", new { practiceId = Model.Practice.PracticeID, doctorId = doctor.DoctorID}) <br />
+            }
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Practice.EmailAddress)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Practice.EmailAddress)
+            @Html.ValidationMessageFor(model => model.Practice.EmailAddress)
+        </div>
+
+
+                    <input type="submit" value="Save" class="btn btn-success active" />
+             @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary", role = "button" })
+
+    </fieldset>
+}
+
+

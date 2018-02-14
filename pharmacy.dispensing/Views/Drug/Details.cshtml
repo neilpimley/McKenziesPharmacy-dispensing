@@ -1,0 +1,38 @@
+﻿@model Pharmacy.Models.Drug
+
+@{
+    ViewBag.Title = "Drug Details";
+    Layout = "~/Views/Shared/_InnerLayout.cshtml";
+}
+
+<fieldset>
+
+    <div class="display-label">DrugName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DrugName)
+    </div>
+
+    <div class="display-label">DrugDose</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DrugDose)
+    </div>
+
+    <div class="display-label">PackSize</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PackSize)
+    </div>
+
+    <div class="display-label">CreatedOn</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatedOn)
+    </div>
+
+    <div class="display-label">ModifiedOn</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ModifiedOn)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DrugId }, new { @class = "btn btn-warning active", role = "button" }) 
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary active", role = "button" })
+</p>
