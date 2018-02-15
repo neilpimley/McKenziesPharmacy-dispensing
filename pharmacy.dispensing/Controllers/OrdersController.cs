@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Configuration;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.IdentityModel.Protocols;
 using Pharmacy.Dispensing.Models;
 using Pharmacy.Models;
 using Pharmacy.Models.Pocos;
 using Pharmacy.Repositories.Interfaces;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Protocols;
 
 namespace Pharmacy.Dispensing.Controllers
 {
@@ -21,10 +25,12 @@ namespace Pharmacy.Dispensing.Controllers
     public class OrdersController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly string _apiKey;
 
-        public OrdersController(IUnitOfWork unitOfWork)
+        public OrdersController(IUnitOfWork unitOfWork, IOptions<ServiceSettings> serviceSettings)
         {
             _unitOfWork = unitOfWork;
+            _apiKey = serviceSettings.Value.SendGridApiKey;
         }
 
         //
@@ -104,7 +110,7 @@ namespace Pharmacy.Dispensing.Controllers
         public async Task<IActionResult> Index(int? status)
         {
             
-if (status == null)
+            if (status == null)
             {
                 // Default to ordered status
                 status = 2;
@@ -123,14 +129,14 @@ if (status == null)
                             Order = new Models.OrderPoco() {
                                 OrderId = o.OrderId,
                                 OrderDate = o.OrderDate,
-                                OrderStatus = o.OrderStatus/*,
+                                OrderStatus = o.OrderStatus,
                                 OrderLines = from ol in _unitOfWork.OrderLineRepository.Get(ol => ol.OrderId == o.OrderId).Result
                                               join od in _unitOfWork.DrugRepository.Get().Result on ol.DrugId equals od.DrugId
                                               select new OrderLinePoco()
                                               {
                                                   DrugName = od.DrugName,
                                                   Qty = ol.Qty
-                                              }*/
+                                              }
                             },
                             StatusChangedDate = (from os in _unitOfWork.OrderStatusRepository.Get(os => os.OrderId == o.OrderId).Result
                                 orderby os.StatusSetDate select os).FirstOrDefault().StatusSetDate,
@@ -160,17 +166,18 @@ if (status == null)
 
         private async Task<bool> SendAlertToDriver(string drivername, CollectScript script)
         {
-            /*var driver = Membership.GetUser(drivername);
+            var driver = User.Identity.Name;
 
             var practice = (from p in await _unitOfWork.PracticeRepository.Get()
-                                                        join d in await _unitOfWork.DoctorRepository.Get() on p.PracticeId equals d.PracticeId
-                                                        join a in await _unitOfWork.AddressRepository.Get() on p.AddressId equals a.AddressId
-                                                        where d.DoctorId == script.DoctorId
-                                                        select p).FirstOrDefault();
+                                join d in await _unitOfWork.DoctorRepository.Get() on p.PracticeId equals d.PracticeId
+                                join a in await _unitOfWork.AddressRepository.Get() on p.AddressId equals a.AddressId
+                                where d.DoctorId == script.DoctorId
+                                select p).FirstOrDefault();
 
-            var address = _unitOfWork.AddressRepository.GetByID(practice.AddressId);
+            var address = await _unitOfWork.AddressRepository.GetByID(practice.AddressId);
 
-            var shop = (from s in _unitOfWork.ShopRepository.Get().Result where s.ShopId == script.ShopId select s).First();
+            var shop = (from s in await _unitOfWork.ShopRepository.Get()
+                        where s.ShopId == script.ShopId select s).First();
 
             var body = new StringBuilder();
             body.AppendFormat("Script for {0} of {1} containing {2}",script.Customer, script.CustomerAddress, script.NumItems);
@@ -179,37 +186,30 @@ if (status == null)
             body.AppendLine("===================================");
             body.AppendLine("Notes:");
             body.AppendLine(script.Notes);
-             
-            var message = new MailMessage();
-            message.From = new MailAddress(ConfigurationManager.AppSettings["Username"].ToString());
-            message.To.Add(new MailAddress(driver.Email));
-            message.Subject = "Pick up script at " + practice.PracticeName + ", " + address.AddressLine1;
-            message.Body = body.ToString();
 
-            var smtp = new System.Net.Mail.SmtpClient();
-            {
-                smtp.Host = Configuration["MailServer"].ToString();
-                smtp.Port = Convert.ToInt32(ConfigurationManager.AppSettings["SmtpPort"]);
-                smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["enableSsl"]);
-                smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
-                smtp.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["Username"].ToString(), ConfigurationManager.AppSettings["Password"].ToString());
-                smtp.Timeout = 20000;
-            }
+            var client = new SendGridClient(_apiKey);
+            var from = new EmailAddress("prescriptions@mckenziespharmacy.com", "McKenzies Pharmacy");
+            var subject = "Pick up script at " + practice.PracticeName + ", " + address.AddressLine1;
+            var to = new EmailAddress(driver);
+            var plainTextContent = "not implemented";
+
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, body.ToString());
+
+
             try
             {
-                smtp.Send(message);
+                await client.SendEmailAsync(msg);
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
                 return false;
-            }*/
-            return true;
+            }
         }
 
         public async Task<IActionResult> Process(Guid id, int status)
         {
-            /* MembershipUser user = Membership.GetUser(User.Identity.Name);
+             /*MembershipUser user = Membership.GetUser(User.Identity.Name);
              Guid userid = (Guid)user.ProviderUserKey;
 
             var order = await _unitOfWork.OrderRepository.GetByID(id);

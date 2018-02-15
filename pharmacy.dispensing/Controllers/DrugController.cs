@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PagedList;
+using Pharmacy.Dispensing.Models;
 using Pharmacy.Models;
 using Pharmacy.Repositories.Interfaces;
 
@@ -24,18 +24,16 @@ namespace Pharmacy.Dispensing.Controllers
 
         public async Task<IActionResult> Index(string currentFilter, string searchString, int? page)
         {
-            int pageSize = 20;
-            int pageNumber = (page ?? 1);
-
-            if (HttpContext.Request.Method == "GET")
-            {
-                searchString = currentFilter;
-            }
-            else
+            if (searchString != null)
             {
                 page = 1;
             }
-            ViewBag.CurrentFilter = searchString;
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
 
             var drugs = from d in await _unitOfWork.DrugRepository.Get()
                         select d;
@@ -45,11 +43,10 @@ namespace Pharmacy.Dispensing.Controllers
                 drugs = drugs.Where(s => s.DrugName.ToUpper().Contains(searchString.ToUpper())).Distinct();
             }
             drugs = drugs.OrderBy(p => p.DrugName);
+            return View(drugs);
 
-            return View(drugs.ToPagedList(pageNumber, pageSize));
-
-
-
+            //int pageSize = 3;
+            //return View(await PaginatedList<Drug>.CreateAsync(drugs.AsQueryable(), page ?? 1, pageSize));
         }
 
         //
