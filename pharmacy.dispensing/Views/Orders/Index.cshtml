@@ -1,4 +1,4 @@
-﻿@model List<Pharmacy.dispensing.Models.ViewOrder>
+﻿@model List<ViewOrder>
 @{
     ViewBag.Title = "Orders " + ViewBag.TitleExt;
     Layout = "~/Views/Shared/_InnerLayout.cshtml";
@@ -30,12 +30,12 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr data-orderid="@item.Order.OrderID">
+    <tr data-orderid="@item.Order.OrderId">
         <td>
             @Html.DisplayFor(modelItem => item.Order.OrderDate)
         </td>
         <td>
-            @Html.ActionLink(item.Customer.Title + " " + item.Customer.Firstname + " " + item.Customer.Lastname, "Details", "Customer", new { id = item.Customer.UserID }, new { title = "click to view customer details" })
+            @Html.ActionLink(item.Customer.Title + " " + item.Customer.Firstname + " " + item.Customer.Lastname, "Details", "AdminCustomer", new { id = item.Customer.UserId }, new { title = "click to view customer details" })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Shop.ShopName)
@@ -52,19 +52,19 @@
                 @Html.DisplayFor(o => orderline.DrugName)
                 if (item.Order.OrderStatus == 5)
                 {
-                    <input type="checkbox" @(orderline.OrderLineStatus == 3 ? "checked" : "") class="orderline-checkbox" data-orderid="@orderline.OrderID" data-orderlineid="@orderline.OrderLineID" data-drug="@orderline.DrugName" />
+                    <input type="checkbox" @(orderline.OrderLineStatus == 3 ? "checked" : "") class="orderline-checkbox" data-orderid="@orderline.OrderId" data-orderlineid="@orderline.OrderLineId" data-drug="@orderline.DrugName" />
                 
                 }
                 @Html.Raw("<br />")
             }
             @if (item.Order.OrderStatus == 5)
             {
-                <button class="btn btn-success process-order-button btn-xs" disabled="disabled" data-orderid="@item.Order.OrderID" data-toggle="modal">Process</button>
+                <button class="btn btn-success process-order-button btn-xs" disabled="disabled" data-orderid="@item.Order.OrderId" data-toggle="modal">Process</button>
             }    
             else if (item.Order.OrderStatus == 6)
             {
-                <button class="btn btn-danger delete-order-button btn-xs" data-orderid="@item.Order.OrderID">Delete</button>
-                <button class="btn btn-info recollect-order-button btn-xs"  data-orderid="@item.Order.OrderID">Recollect</button>
+                <button class="btn btn-danger delete-order-button btn-xs" data-orderid="@item.Order.OrderId">Delete</button>
+                <button class="btn btn-info recollect-order-button btn-xs"  data-orderid="@item.Order.OrderId">Recollect</button>
             }
         </td>
         <td> 
@@ -83,7 +83,7 @@
                 case 7:
                     {
                     @Html.Raw("Read to be delivered on :<br />" + item.StatusChangedDate + " ")
-                    @Html.ActionLink("Ready to collect", "Process", new { id = item.Order.OrderID, status = 8 }, new { @class = "btn btn-primary btn-xs active", role="button" })   
+                    @Html.ActionLink("Ready to collect", "Process", new { id = item.Order.OrderId, status = 8 }, new { @class = "btn btn-primary btn-xs active", role="button" })   
                         break;
                     }
                 default:

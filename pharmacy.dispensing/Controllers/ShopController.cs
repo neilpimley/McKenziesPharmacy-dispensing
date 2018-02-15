@@ -11,7 +11,7 @@ using Pharmacy.Dispensing.Models;
 using Pharmacy.Models;
 using Pharmacy.Repositories.Interfaces;
 
-namespace Pharmacy.dispensing.Controllers
+namespace Pharmacy.Dispensing.Controllers
 {
     [Authorize]
     public class ShopController : Controller

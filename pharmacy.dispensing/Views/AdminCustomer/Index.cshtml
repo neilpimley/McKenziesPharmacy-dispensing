@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Pharmacy.dispensing.Models.CustomerPoco>
+﻿@model IEnumerable<Pharmacy.Models.Pocos.CustomerPoco>
 
 @{
     ViewBag.Title = "Customers";
@@ -82,7 +82,7 @@
             @Html.DisplayFor(modelItem => item.Address.AddressLine1)
         </td>
         <td>
-            @Html.ActionLink(item.Doctor.Title.TitleName + " " + item.Doctor.Firstname + " " + item.Doctor.Surname,"Details","Doctor", new { id =  item.Doctor.DoctorID }, new { title = "click to view doctors details" })
+            @Html.ActionLink(item.Doctor.Title.TitleName + " " + item.Doctor.Firstname + " " + item.Doctor.Surname,"Details","Doctor", new { id =  item.Doctor.DoctorId }, new { title = "click to view doctors details" })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Shop.ShopName)
@@ -97,9 +97,9 @@
             @Html.DisplayFor(modelItem => item.Active)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit","AdminCustomer", new { id = item.CustomerID}, new { @class = "btn btn-primary btn-xs active", role="button" }) 
-            @Html.ActionLink("Details", "Details", "AdminCustomer", new { id = item.CustomerID }, new { @class = "btn btn-warning btn-xs active", role = "button" }) 
-            @Html.ActionLink("Delete", "Delete", "AdminCustomer", new { id = item.CustomerID},new { @class = "btn btn-danger btn-xs active", role = "button" })
+            @Html.ActionLink("Edit", "Edit","AdminCustomer", new { id = item.CustomerId}, new { @class = "btn btn-primary btn-xs active", role="button" }) 
+            @Html.ActionLink("Details", "Details", "AdminCustomer", new { id = item.CustomerId }, new { @class = "btn btn-warning btn-xs active", role = "button" }) 
+            @Html.ActionLink("Delete", "Delete", "AdminCustomer", new { id = item.CustomerId},new { @class = "btn btn-danger btn-xs active", role = "button" })
         </td>
     </tr>
 }

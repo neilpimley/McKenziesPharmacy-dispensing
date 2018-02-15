@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Pharmacy.Dispensing.Models;
 using Pharmacy.Models;
 using Pharmacy.Repositories.Interfaces;
 
@@ -14,10 +17,12 @@ namespace Pharmacy.Dispensing.Controllers
     public class DoctorController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public DoctorController(IUnitOfWork unitOfWork)
+        public DoctorController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         //
@@ -29,7 +34,15 @@ namespace Pharmacy.Dispensing.Controllers
             {
                 var doctors = (from d in await  _unitOfWork.DoctorRepository.Get()
                                join p in await  _unitOfWork.PracticeRepository.Get() on d.PracticeId equals p.PracticeId
-                               select d).OrderBy(d => d.Surname).ThenBy(d => d.Firstname);
+                               join t in await _unitOfWork.TitleRepository.Get() on d.TitleId equals t.TitleId
+                               select new DoctorPoco() {
+                                    DoctorId = d.DoctorId,
+                                    Firstname = d.Firstname,
+                                    Surname = d.Surname,
+                                    CreatedOn = d.CreatedOn,
+                                    Practice = p,
+                                    Title = t
+                            }).OrderBy(d => d.Surname).ThenBy(d => d.Firstname);
                                
                 
                 if (OrderByPractice ?? false)
@@ -41,8 +54,17 @@ namespace Pharmacy.Dispensing.Controllers
             {
                 var doctors = (from d in await _unitOfWork.DoctorRepository.Get()
                                join p in await _unitOfWork.PracticeRepository.Get() on d.PracticeId equals p.PracticeId
+                                join t in await _unitOfWork.TitleRepository.Get() on d.TitleId equals t.TitleId
                                orderby d.Surname, d.Firstname, p.PracticeName
-                               select d).Where(p => p.PracticeId == PracticeId).OrderBy(d => d.Surname).ThenBy(d => d.Firstname);
+                               select new DoctorPoco()
+                                {
+                                    DoctorId = d.DoctorId,
+                                    Firstname = d.Firstname,
+                                    Surname = d.Surname,
+                                    CreatedOn = d.CreatedOn,
+                                    Practice = p,
+                                    Title = t
+                                }).Where(p => p.PracticeId == PracticeId).OrderBy(d => d.Surname).ThenBy(d => d.Firstname);
 
                 return View(doctors.ToList());
             }
@@ -53,7 +75,9 @@ namespace Pharmacy.Dispensing.Controllers
 
         public async Task<IActionResult> Details(Guid id)
         {
-            var doctor = await  _unitOfWork.DoctorRepository.GetByID(id);
+            var doctor = _mapper.Map<DoctorPoco>(await  _unitOfWork.DoctorRepository.GetByID(id));
+            doctor.Title = await _unitOfWork.TitleRepository.GetByID(doctor.TitleId);
+            doctor.Practice = await _unitOfWork.PracticeRepository.GetByID(doctor.PracticeId);
             return View(doctor);
         }
 
@@ -91,7 +115,7 @@ namespace Pharmacy.Dispensing.Controllers
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var doctor = await _unitOfWork.DoctorRepository.GetByID(id);
+            var doctor = _mapper.Map<DoctorPoco>(await _unitOfWork.DoctorRepository.GetByID(id));
             ViewBag.PracticeId = new SelectList(await _unitOfWork.PracticeRepository.Get(), "PracticeId", "PracticeName", doctor.PracticeId);
             ViewBag.TitleId = new SelectList(await _unitOfWork.TitleRepository.Get(), "TitleId", "TitleName", doctor.TitleId);
             return View(doctor);

@@ -38,18 +38,19 @@ namespace Pharmacy.Dispensing
             var config = new AutoMapper.MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<CustomerPoco, Customer>();
-                cfg.CreateMap<OrderPoco, Order>();
+                cfg.CreateMap<Pharmacy.Models.Pocos.OrderPoco, Order>();
                 cfg.CreateMap<DrugPoco, Drug>();
                 cfg.CreateMap<ReminderPoco, Reminder>();
 
                 cfg.CreateMap<Customer, CustomerPoco>();
-                cfg.CreateMap<Order, OrderPoco>();
+                cfg.CreateMap<Order, Pharmacy.Models.Pocos.OrderPoco>();
                 cfg.CreateMap<Drug, DrugPoco>();
                 cfg.CreateMap<Reminder, ReminderPoco>();
 
                 cfg.CreateMap<Shop, ShopPoco>();
                 cfg.CreateMap<Doctor, DoctorPoco>();
                 cfg.CreateMap<Practice, PracticePoco>();
+                cfg.CreateMap<Order, Models.OrderPoco>();
                 cfg.CreateMap<OrderLine, OrderLinePoco>();
             });
 
@@ -77,7 +78,7 @@ namespace Pharmacy.Dispensing
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Shared/Error");
             }
 
             app.UseStaticFiles();
@@ -86,9 +87,7 @@ namespace Pharmacy.Dispensing
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute("default","{controller=Orders}/{action=Index}/{id?}");
             });
         }
     }

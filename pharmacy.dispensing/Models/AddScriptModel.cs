@@ -10,7 +10,7 @@ namespace Pharmacy.Dispensing.Models
     {
         public CollectScript Script { get; set; }
 
-        public Guid TitleID { get; set; }
+        public Guid TitleId { get; set; }
         public List<SelectListItem> Titles { get; set; }
         public List<SelectListItem> Doctors { get; set; }
         public List<SelectListItem> Shops { get; set; }

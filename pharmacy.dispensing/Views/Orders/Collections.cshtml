@@ -1,4 +1,4 @@
-﻿@model Pharmacy.dispensing.Models.CollectionsModel
+﻿@model Pharmacy.Dispensing.Models.CollectionsModel
 @{
     ViewBag.Title = "Order sheets";
     Layout = "~/Views/Shared/_InnerLayout.cshtml";
@@ -23,18 +23,18 @@
         {
             <table class="table table-bordered script-tables no-print">
             <thead>
-            <tr class="no-print" data-practiceid="@practice.PracticeID">
+            <tr class="no-print" data-practiceid="@practice.PracticeId">
                 <th colspan="3"><h5>@practice.Practice</h5></th>
                 <th class="no-print"></th>
                 <th class="no-screen"></th>
                 <th>Notes</th>
-                <th class="no-print">Print? <a href="#" class="select-all" data-practiceid="@practice.PracticeID">all</a></th>
+                <th class="no-print">Print? <a href="#" class="select-all" data-practiceid="@practice.PracticeId">all</a></th>
             </tr> 
             </thead>
             <tbody>
             @foreach (var script in practice.Scripts)
             { 
-            <tr class="no-print" data-practiceid="@practice.PracticeID" data-orderid="@script.OrderID" data-printed="@(script.OrderStatus == 2 ? "false" : "true")">
+            <tr class="no-print" data-practiceid="@practice.PracticeId" data-orderid="@script.OrderId" data-printed="@(script.OrderStatus == 2 ? "false" : "true")">
                 <td style="width:15%">@script.OrderDate.ToShortDateString()</td>
                 <td style="width:20%">@script.Customer</td>
                 <td style="width:30%">@script.CustomerAddress</td>
@@ -51,7 +51,7 @@
                 }
                 </td>
                 <td style="width:30%">@script.Notes</td>
-                <td style="width:5%" class="no-print"><input type="checkbox" class="print-checkbox" id="chkPrint@script.OrderID" data-practiceid="@practice.PracticeID" data-orderid="@script.OrderID" name="chkPrint"/></td>
+                <td style="width:5%" class="no-print"><input type="checkbox" class="print-checkbox" id="chkPrint@script.OrderID" data-practiceid="@practice.PracticeId" data-orderid="@script.OrderId" name="chkPrint"/></td>
              </tr>
             }
             </tbody>

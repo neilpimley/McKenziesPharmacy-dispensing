@@ -6,12 +6,12 @@ namespace Pharmacy.Dispensing.Models
 {
     public class PracticesModel 
     {
-        public Practice Practice { get; set; }
+        public PracticePoco Practice { get; set; }
 
-        public List<Practice> Practices { get; set; }
+        public IEnumerable<PracticePoco> Practices { get; set; }
 
-        public List<Doctor> Doctors { get; set; }
-        public List<SelectListItem> DoctorsDropdown { get; set; }
+        public IEnumerable<Doctor> Doctors { get; set; }
+        public IEnumerable<SelectListItem> DoctorsDropdown { get; set; }
 
 
     }

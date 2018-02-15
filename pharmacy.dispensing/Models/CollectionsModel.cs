@@ -7,7 +7,7 @@ namespace Pharmacy.Dispensing.Models
 
     public class ScriptCollection 
     {
-        public Guid PracticeID { get; set; }
+        public Guid PracticeId { get; set; }
         public string Practice { get; set; }
         public IEnumerable<CollectScript> Scripts { get; set; }
     }

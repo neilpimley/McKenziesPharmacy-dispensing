@@ -1,4 +1,4 @@
-﻿@model Pharmacy.dispensing.Models.DoctorPoco
+﻿@model Pharmacy.Dispensing.Models.DoctorPoco
 
 @{
     ViewBag.Title = "Edit Doctor";
@@ -10,15 +10,15 @@
     @Html.ValidationSummary(true)
     <fieldset>
         
-        @Html.HiddenFor(model => model.DoctorID)
+        @Html.HiddenFor(model => model.DoctorId)
 
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.TitleID, "Title")
+            @Html.LabelFor(model => model.TitleId, "Title")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("TitleID", String.Empty)
-            @Html.ValidationMessageFor(model => model.TitleID)
+            @Html.DropDownList("TitleId", String.Empty)
+            @Html.ValidationMessageFor(model => model.TitleId)
         </div>
 
         <div class="editor-label">
@@ -38,11 +38,11 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.PracticeID, "Practice")
+            @Html.LabelFor(model => model.PracticeId, "Practice")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("PracticeID", String.Empty)
-            @Html.ValidationMessageFor(model => model.PracticeID)
+            @Html.DropDownList("PracticeId", String.Empty)
+            @Html.ValidationMessageFor(model => model.PracticeId)
         </div>
 
                    <input type="submit" value="Save" class="btn btn-success active" />

@@ -1,5 +1,6 @@
 ﻿using Pharmacy.Dispensing.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -10,12 +11,9 @@ using Pharmacy.Dispensing.Models;
 using Pharmacy.Models;
 using Pharmacy.Repositories.Interfaces;
 
-namespace Pharmacy.dispensing.Controllers
+namespace Pharmacy.Dispensing.Controllers
 {
     [Authorize]
-#if !DEBUG
-    [RequireHttps] 
-#endif
     public class PracticeController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -33,7 +31,7 @@ namespace Pharmacy.dispensing.Controllers
         public async Task<IActionResult> Index()
         {
             var model = new PracticesModel();
-            model.Practices = await _unitOfWork.PracticeRepository.Get(orderBy: p => p.OrderBy(x => x.PracticeName));
+            model.Practices = _mapper.Map<IEnumerable<PracticePoco>>(await _unitOfWork.PracticeRepository.Get(orderBy: p => p.OrderBy(x => x.PracticeName)));
             model.Doctors = await _unitOfWork.DoctorRepository.Get(orderBy: d => d.OrderBy(x => x.Surname));
 
             return View(model);
@@ -53,7 +51,7 @@ namespace Pharmacy.dispensing.Controllers
 
         public async Task<IActionResult> Create()
         {
-            ViewBag.AddressID = new SelectList(await _unitOfWork.AddressRepository.Get(), "AddressID", "AddressLine1");
+            ViewBag.AddressID = new SelectList(await _unitOfWork.AddressRepository.Get(), "AddressId", "AddressLine1");
             return View();
         }
 
@@ -71,7 +69,7 @@ namespace Pharmacy.dispensing.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AddressID = new SelectList(await _unitOfWork.AddressRepository.Get(), "AddressID", "AddressLine1", practice.AddressId);
+            ViewBag.AddressID = new SelectList(await _unitOfWork.AddressRepository.Get(), "AddressId", "AddressLine1", practice.AddressId);
             return View(practice);
         }
 
@@ -81,8 +79,8 @@ namespace Pharmacy.dispensing.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var model = new PracticesModel();
-            model.Practice = await _unitOfWork.PracticeRepository.GetByID(id);
-            ViewBag.AddressID = new SelectList(await _unitOfWork.AddressRepository.Get(), "AddressID", "AddressLine1", model.Practice.AddressId);
+            model.Practice = _mapper.Map<PracticePoco>(await _unitOfWork.PracticeRepository.GetByID(id));
+            ViewBag.AddressID = new SelectList(await _unitOfWork.AddressRepository.Get(), "AddressId", "AddressLine1", model.Practice.AddressId);
             var doctors = (from d in await _unitOfWork.DoctorRepository.Get()
                            select new
                            {
@@ -97,7 +95,7 @@ namespace Pharmacy.dispensing.Controllers
                                          Value = d.Value.ToString()
                                      }).ToList();
 
-            model.Doctors = await _unitOfWork.DoctorRepository.Get(filter: d => d.PracticeId == id).toLis
+            model.Doctors = await _unitOfWork.DoctorRepository.Get(filter: d => d.PracticeId == id);
 
             return View(model);
         }
@@ -115,7 +113,7 @@ namespace Pharmacy.dispensing.Controllers
                 _unitOfWork.Save();
                 return RedirectToAction("Index");
             }
-            ViewBag.AddressID = new SelectList(await _unitOfWork.AddressRepository.Get(), "AddressID", "AddressLine1", model.Practice.AddressId);
+            ViewBag.AddressID = new SelectList(await _unitOfWork.AddressRepository.Get(), "AddressId", "AddressLine1", model.Practice.AddressId);
             return View(model);
         }
 
@@ -141,14 +139,14 @@ namespace Pharmacy.dispensing.Controllers
         }
 
 
-        public ActionResult RemoveFromPractice(Guid doctorId, Guid practiceId)
+        public async Task<IActionResult> RemoveFromPractice(Guid doctorId, Guid practiceId)
         {
             var doctor = _mapper.Map<DoctorPoco>(await _unitOfWork.DoctorRepository.GetByID(doctorId));
             doctor.PracticeId = Guid.Empty;
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
 
-            var practice = _unitOfWork.PracticeRepository.GetByID(practiceId);
-            return View(practice);
+            var practice = await  _unitOfWork.PracticeRepository.GetByID(practiceId);
+            return View("Index", practice);
         }
 
     }

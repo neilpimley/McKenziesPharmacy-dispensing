@@ -1,4 +1,4 @@
-﻿@model Pharmacy.dispensing.Models.PracticesModel
+﻿@model Pharmacy.Dispensing.Models.PracticesModel
 
 @{
     ViewBag.Title = "Edit Practice";
@@ -10,7 +10,7 @@
     @Html.ValidationSummary(true)
     <fieldset>
 
-        @Html.HiddenFor(model => model.Practice.PracticeID)
+        @Html.HiddenFor(model => model.Practice.PracticeId)
 
         <div class="editor-field">
             @Html.EditorFor(model => model.Practice.PracticeName)
@@ -18,18 +18,18 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Practice.AddressID, "Address")
+            @Html.LabelFor(model => model.Practice.AddressId, "Address")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("AddressID", String.Empty)
-            @Html.ValidationMessageFor(model => model.Practice.AddressID)
+            @Html.DropDownList("AddressId", String.Empty)
+            @Html.ValidationMessageFor(model => model.Practice.AddressId)
         </div>
 
         <div class="editor-label">Doctors</div>
         <div class="editor-field">
-            @foreach (var doctor in Model.Doctors.Where(p => p.PracticeID == Model.Practice.PracticeID))
+            @foreach (var doctor in Model.Doctors.Where(p => p.PracticeId == Model.Practice.PracticeId))
             {
-                @Html.DisplayFor(d => doctor.Title.TitleName) @Html.Raw(" ") @Html.DisplayFor(d => doctor.Surname) @:&nbsp; @Html.ActionLink("Remove", "RemoveFromPractice", new { practiceId = Model.Practice.PracticeID, doctorId = doctor.DoctorID}) <br />
+                @Html.DisplayFor(d => doctor.Title.TitleName) @Html.Raw(" ") @Html.DisplayFor(d => doctor.Surname) @:&nbsp; @Html.ActionLink("Remove", "RemoveFromPractice", new { practiceId = Model.Practice.PracticeId, doctorId = doctor.DoctorId}) <br />
             }
         </div>
 

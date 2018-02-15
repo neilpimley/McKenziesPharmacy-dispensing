@@ -1,4 +1,4 @@
-﻿@model Pharmacy.DAL.Drug
+﻿@model Pharmacy.Models.Drug
 
 @{
     ViewBag.Title = "Edit Drug";
@@ -10,7 +10,7 @@
     @Html.ValidationSummary(true)
     <fieldset>
 
-        @Html.HiddenFor(model => model.DrugID)
+        @Html.HiddenFor(model => model.DrugId)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.DrugName)

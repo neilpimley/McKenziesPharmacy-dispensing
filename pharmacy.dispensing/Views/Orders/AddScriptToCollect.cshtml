@@ -1,4 +1,4 @@
-﻿@model Pharmacy.dispensing.Models.AddScriptModel
+﻿@model Pharmacy.Dispensing.Models.AddScriptModel
 
 @{
     ViewBag.Title = "Add Script to Collect";
@@ -11,13 +11,13 @@
 @using (Html.BeginForm("AddScriptToCollect", "Orders", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.ValidationSummary(true)
-    @Html.Hidden("Script_OrderID", Guid.Empty)
+    @Html.Hidden("Script_OrderId", Guid.Empty)
 
     <div class="form-group">
 	    <label class="col-md-3 control-label">@Html.LabelFor(model => model.Script.Customer)</label>
 	    <div class="col-md-2">
-             @Html.DropDownListFor(m => Model.TitleID, Model.Titles, "--choose--", new { @class="form-control" })
-             @Html.ValidationMessageFor(m => m.TitleID, "Please choose a title")
+             @Html.DropDownListFor(m => Model.TitleId, Model.Titles, "--choose--", new { @class="form-control" })
+             @Html.ValidationMessageFor(m => m.TitleId, "Please choose a title")
         </div>
         <div class="col-md-5">
             @Html.TextBoxFor(model => model.Script.Customer, new { @class="form-control" })
@@ -34,19 +34,19 @@
     </div>
 
     <div class="form-group">
-    	<label class="col-md-3 control-label">@Html.LabelFor(model => model.Script.DoctorID, "Doctor")</label>
+    	<label class="col-md-3 control-label">@Html.LabelFor(model => model.Script.DoctorId, "Doctor")</label>
         <div class="col-md-4">
-            @Html.DropDownListFor(model => model.Script.DoctorID, Model.Doctors, "--choose--", new { @class = "form-control", required = "" })
-            @Html.ValidationMessageFor(m => m.Script.DoctorID, "Please select a doctor")
+            @Html.DropDownListFor(model => model.Script.DoctorId, Model.Doctors, "--choose--", new { @class = "form-control", required = "" })
+            @Html.ValidationMessageFor(m => m.Script.DoctorId, "Please select a doctor")
         </div>
     </div>
 
 
         <div class="form-group">
-	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Script.ShopID, "Shop")</label>
+	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Script.ShopId, "Shop")</label>
             <div class="col-md-4">
-                @Html.DropDownListFor(model => model.Script.ShopID, Model.Shops, "--choose--", new { @class = "form-control", required="" })
-                @Html.ValidationMessageFor(m => m.Script.DoctorID, "Please select a shop")
+                @Html.DropDownListFor(model => model.Script.ShopId, Model.Shops, "--choose--", new { @class = "form-control", required="" })
+                @Html.ValidationMessageFor(m => m.Script.DoctorId, "Please select a shop")
             </div>
         </div>
     
@@ -54,7 +54,7 @@
 	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Driver, "Driver")</label>
             <div class="col-md-4">
                 @Html.DropDownListFor(model => model.Driver, Model.Drivers, "--choose--", new { @class = "form-control", required = "" })
-                @Html.ValidationMessageFor(m => m.Script.DoctorID, "Please select a driver")
+                @Html.ValidationMessageFor(m => m.Script.DoctorId, "Please select a driver")
                
             </div>
         </div>
@@ -89,9 +89,4 @@
         </div>
         </div>
     
-}
-
-@section PageSpecificJavascript {
-    
-
 }

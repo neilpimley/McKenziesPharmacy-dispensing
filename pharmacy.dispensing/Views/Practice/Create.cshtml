@@ -1,4 +1,4 @@
-﻿@model Pharmacy.DAL.Practice
+﻿@model Pharmacy.Models.Practice
 
 @{
     ViewBag.Title = "Create Practice";
@@ -19,11 +19,11 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.AddressID, "Address")
+            @Html.LabelFor(model => model.AddressId, "Address")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("AddressID", String.Empty)
-            @Html.ValidationMessageFor(model => model.AddressID)
+            @Html.DropDownList("AddressId", String.Empty)
+            @Html.ValidationMessageFor(model => model.AddressId)
         </div>
 
         <div class="editor-label">

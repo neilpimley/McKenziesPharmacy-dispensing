@@ -94,7 +94,7 @@ namespace Pharmacy.Dispensing.Controllers
             model.Shops = shops.Select(a => new SelectListItem { Value = a.Id.ToString(), Text = a.Name, Selected = model.Script.ShopId == a.Id ? true : false }).ToList();
 
             var titles = (from s in _unitOfWork.TitleRepository.Get().Result select new { Id = s.TitleId, Name = s.TitleName }).ToList();
-            model.Titles = titles.Select(a => new SelectListItem { Value = a.Id.ToString(), Text = a.Name, Selected = model.TitleID == a.Id ? true : false }).ToList();
+            model.Titles = titles.Select(a => new SelectListItem { Value = a.Id.ToString(), Text = a.Name, Selected = model.TitleId == a.Id ? true : false }).ToList();
 
             var doctors = (from s in _unitOfWork.DoctorRepository.Get().Result orderby s.Surname select new { Id = s.DoctorId, Name = "Dr." + s.Surname }).ToList();
             model.Doctors = doctors.Select(a => new SelectListItem { Value = a.Id.ToString(), Text = a.Name, Selected = model.Script.DoctorId == a.Id ? true : false }).ToList();
@@ -120,7 +120,7 @@ if (status == null)
                          where o.OrderStatus == status
                          select new ViewOrder()
                          {
-                            Order = new OrderPoco() {
+                            Order = new Models.OrderPoco() {
                                 OrderId = o.OrderId,
                                 OrderDate = o.OrderDate,
                                 OrderStatus = o.OrderStatus/*,

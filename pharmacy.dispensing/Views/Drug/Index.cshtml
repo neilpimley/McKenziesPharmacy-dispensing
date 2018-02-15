@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<Pharmacy.DAL.Drug>
+﻿@model PagedList.IPagedList<Pharmacy.Models.Drug>
 
 @{
     ViewBag.Title = "Drugs";
@@ -49,9 +49,9 @@
             @Html.DisplayFor(modelItem => item.ModifiedOn)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.DrugID }, new { @class = "btn btn-primary btn-xs active", role = "button" }) 
-            @Html.ActionLink("Details", "Details", new { id = item.DrugID }, new { @class = "btn btn-warning btn-xs active", role = "button" }) 
-            @Html.ActionLink("Delete", "Delete", new { id = item.DrugID }, new { @class = "btn btn-danger btn-xs active", role = "button" })
+            @Html.ActionLink("Edit", "Edit", new { id = item.DrugId }, new { @class = "btn btn-primary btn-xs active", role = "button" }) 
+            @Html.ActionLink("Details", "Details", new { id = item.DrugId }, new { @class = "btn btn-warning btn-xs active", role = "button" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.DrugId }, new { @class = "btn btn-danger btn-xs active", role = "button" })
         </td>
     </tr>
 }

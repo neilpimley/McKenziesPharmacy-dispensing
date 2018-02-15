@@ -1,4 +1,4 @@
-﻿@model Pharmacy.dispensing.Models.PracticesModel
+﻿@model Pharmacy.Dispensing.Models.PracticesModel
 
 @{
     ViewBag.Title = "Practices";
@@ -44,10 +44,10 @@
             @Html.DisplayFor(modelItem => practice.EmailAddress)
         </td>
         <td>
-            @foreach (var doctor in Model.Doctors.Where(p => p.PracticeID == practice.PracticeID)) {
+            @foreach (var doctor in Model.Doctors.Where(p => p.PracticeId == practice.PracticeId)) {
                 @Html.DisplayFor(d => doctor.Title.TitleName) @Html.Raw(" ") @Html.DisplayFor(d => doctor.Surname)<br />
             }
-             @Html.ActionLink("Edit", "Edit", new { id = practice.PracticeID })
+             @Html.ActionLink("Edit", "Edit", new { id = practice.PracticeId })
         </td>
         <td>
             @Html.DisplayFor(modelItem => practice.CreatedOn)
@@ -56,9 +56,9 @@
             @Html.DisplayFor(modelItem => practice.ModifiedOn)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = practice.PracticeID }, new { @class = "btn btn-warning btn-xs active", role = "button" }) 
-            @Html.ActionLink("Details", "Details", new { id = practice.PracticeID }, new { @class = "btn btn-primary btn-xs active", role = "button" }) 
-            @Html.ActionLink("Delete", "Delete", new { id = practice.PracticeID }, new { @class = "btn btn-danger btn-xs active", role = "button" })
+            @Html.ActionLink("Edit", "Edit", new { id = practice.PracticeId }, new { @class = "btn btn-warning btn-xs active", role = "button" }) 
+            @Html.ActionLink("Details", "Details", new { id = practice.PracticeId }, new { @class = "btn btn-primary btn-xs active", role = "button" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = practice.PracticeId }, new { @class = "btn btn-danger btn-xs active", role = "button" })
         </td>
     </tr>
 }

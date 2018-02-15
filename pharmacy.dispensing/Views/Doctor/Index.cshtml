@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Pharmacy.dispensing.Models.DoctorPoco>
+﻿@model IEnumerable<DoctorPoco>
 
 @{
     ViewBag.Title = "Doctors";
@@ -31,7 +31,7 @@
             @Html.DisplayFor(modelItem => item.Title.TitleName) @Html.DisplayFor(modelItem => item.Firstname) @Html.DisplayFor(modelItem => item.Surname)
         </td>
         <td>
-             @Html.ActionLink(item.Practice.PracticeName, "Details", "Practice", new { id = item.PracticeID }, null) 
+             @Html.ActionLink(item.Practice.PracticeName, "Details", "Practice", new { id = item.PracticeId }, null) 
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreatedOn)
@@ -40,9 +40,9 @@
             @Html.DisplayFor(modelItem => item.ModifiedOn)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.DoctorID }, new { @class = "btn btn-primary btn-xs active", role = "button" }) 
-            @Html.ActionLink("Details", "Details", new { id = item.DoctorID }, new { @class = "btn btn-warning btn-xs active", role = "button" }) 
-            @Html.ActionLink("Delete", "Delete", new { id = item.DoctorID }, new { @class = "btn btn-danger btn-xs active", role = "button" })
+            @Html.ActionLink("Edit", "Edit", new { id = item.DoctorId }, new { @class = "btn btn-primary btn-xs active", role = "button" }) 
+            @Html.ActionLink("Details", "Details", new { id = item.DoctorId }, new { @class = "btn btn-warning btn-xs active", role = "button" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.DoctorId }, new { @class = "btn btn-danger btn-xs active", role = "button" })
         </td>
     </tr>
 }

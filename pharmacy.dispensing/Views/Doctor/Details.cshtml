@@ -1,4 +1,4 @@
-﻿@model Pharmacy.dispensing.Models.DoctorPoco
+﻿@model DoctorPoco
 
 @{
     ViewBag.Title = "Doctor Details";
@@ -29,6 +29,6 @@
     </div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.DoctorID }, new { @class = "btn btn-warning active", role = "button" }) 
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DoctorId }, new { @class = "btn btn-warning active", role = "button" }) 
     @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary active", role = "button" })
 </p>
