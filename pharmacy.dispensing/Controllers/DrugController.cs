@@ -76,7 +76,7 @@ namespace Pharmacy.Dispensing.Controllers
             {
                 drug.DrugId = Guid.NewGuid();
                 _unitOfWork.DrugRepository.Insert(drug);
-                _unitOfWork.Save();
+                await _unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
 

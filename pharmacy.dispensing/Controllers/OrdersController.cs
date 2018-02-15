@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -25,12 +26,14 @@ namespace Pharmacy.Dispensing.Controllers
     public class OrdersController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
         private readonly string _apiKey;
 
-        public OrdersController(IUnitOfWork unitOfWork, IOptions<ServiceSettings> serviceSettings)
+        public OrdersController(IUnitOfWork unitOfWork, IMapper mapper ,IOptions<ServiceSettings> serviceSettings)
         {
             _unitOfWork = unitOfWork;
             _apiKey = serviceSettings.Value.SendGridApiKey;
+            _mapper = mapper;
         }
 
         //
@@ -83,7 +86,7 @@ namespace Pharmacy.Dispensing.Controllers
                 script.ShopId = model.Script.ShopId;
 
                 _unitOfWork.CollectScriptRepository.Insert(script);
-                _unitOfWork.Save();
+                await _unitOfWork.SaveAsync();
 
                 if (model.SendAlert)
                     if (!SendAlertToDriver(model.Driver, script).Result)
@@ -196,15 +199,8 @@ namespace Pharmacy.Dispensing.Controllers
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, body.ToString());
 
 
-            try
-            {
-                await client.SendEmailAsync(msg);
-                return true;
-            }
-            catch(Exception ex)
-            {
-                return false;
-            }
+            await client.SendEmailAsync(msg);
+            return true;
         }
 
         public async Task<IActionResult> Process(Guid id, int status)
@@ -343,7 +339,7 @@ namespace Pharmacy.Dispensing.Controllers
                 {
                     var collection = new ScriptCollection();
                     collection.Practice = practice.PracticeName;
-                    collection.Scripts = dateFilteredScripts;
+                    collection.Scripts = _mapper.Map<IEnumerable<CollectScriptPoco>>(dateFilteredScripts);
                     practicesWithScriptToCollect.Add(collection);
                 }
 

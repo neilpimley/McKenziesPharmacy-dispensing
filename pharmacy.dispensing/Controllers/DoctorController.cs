@@ -131,7 +131,7 @@ namespace Pharmacy.Dispensing.Controllers
             {
                 _unitOfWork.DoctorRepository.Update(doctor);
                 //db.ObjectStateManager.ChangeObjectState(doctor, EntityState.Modified);
-                _unitOfWork.SaveAsync();
+                await _unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
             ViewBag.PracticeID = new SelectList(await _unitOfWork.PracticeRepository.Get(), "PracticeId", "PracticeName", doctor.PracticeId);

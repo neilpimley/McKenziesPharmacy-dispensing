@@ -44,7 +44,7 @@
                     if (script.Items != null) {
                         foreach (var orderline in script.Items)
                         {
-                            @Html.DisplayFor(o => orderline.Drug.DrugName) 
+                            @Html.DisplayFor(o => orderline.DrugName) 
                             @Html.Raw("<br />")
                         }
                     }

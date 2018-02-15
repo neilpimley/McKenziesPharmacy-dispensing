@@ -116,7 +116,7 @@ namespace Pharmacy.Dispensing.Controllers
         {
             var shop = await _unitOfWork.ShopRepository.GetByID(id);
             _unitOfWork.ShopRepository.Delete(shop);
-            _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync();
             return RedirectToAction("Index");
         }
 

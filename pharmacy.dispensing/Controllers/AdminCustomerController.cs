@@ -58,7 +58,7 @@ namespace Pharmacy.Dispensing.Controllers
                     Shop = s
                 }).ToList();
 
-            return View(customers.ToList());
+            return View(customers);
         }
 
         //

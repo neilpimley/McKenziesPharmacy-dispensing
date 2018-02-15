@@ -44,7 +44,7 @@ namespace Pharmacy.Dispensing.Controllers
             {
                 address.AddressId = Guid.NewGuid();
                 _unitOfWork.AddressRepository.Insert(address);
-                _unitOfWork.Save();
+                await _unitOfWork.SaveAsync();
                 return RedirectToAction("Details");  
             }
 

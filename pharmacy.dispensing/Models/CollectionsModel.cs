@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Pharmacy.Models;
+using Pharmacy.Models.Pocos;
 
 namespace Pharmacy.Dispensing.Models
 {
@@ -9,8 +10,14 @@ namespace Pharmacy.Dispensing.Models
     {
         public Guid PracticeId { get; set; }
         public string Practice { get; set; }
-        public IEnumerable<CollectScript> Scripts { get; set; }
+        public IEnumerable<CollectScriptPoco> Scripts { get; set; }
     }
+
+    public partial class CollectScriptPoco : CollectScript
+    {
+        public IEnumerable<OrderLinePoco> Items { get; set; }
+    }
+
 
     public class CollectionsModel
     {
