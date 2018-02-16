@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-		<div class="navbar navbar-inverse navbar-fixed-top bs-docs-nav  no-print" role="banner">
+<div class="navbar navbar-inverse navbar-fixed-top bs-docs-nav  no-print" role="banner">
     <div class="container">
         <!-- Menu button for smallar screens -->
         <div class="navbar-header">
@@ -223,20 +223,20 @@
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (response) {
-                            $(".script-requested").html( response.ScriptRequested.length );
-                            MakeDropdown(".script-requested-list", response.ScriptRequested, "@Url.Action("Collections", "Orders")", "label-warning");
+                            $(".script-requested").html( response.scriptRequested.length );
+                            MakeDropdown(".script-requested-list", response.scriptRequested, "@Url.Action("Collections", "Orders")", "label-warning");
 
-                            $(".script-ordered").html( response.ScriptOrdered.length );
-                            MakeDropdown(".script-ordered-list", response.ScriptOrdered, "@Url.Action("Index", "Orders", new { status = 4 })", "label-default");
+                            $(".script-ordered").html( response.scriptOrdered.length );
+                            MakeDropdown(".script-ordered-list", response.scriptOrdered, "@Url.Action("Index", "Orders", new { status = 2 })", "label-default");
 
-                            $(".collected").html( response.Collected.length );
-                            MakeDropdown(".collected-list", response.Collected, "@Url.Action("Index", "Orders", new { status = 5 })", "label-success");
+                            $(".collected").html( response.collected.length );
+                            MakeDropdown(".collected-list", response.collected, "@Url.Action("Index", "Orders", new { status = 7 })", "label-success");
 
-                            $(".not-collected").html( response.NotCollected.length );
-                            MakeDropdown(".not-collected-list", response.NotCollected, "@Url.Action("Index", "Orders", new { status = 6 })", "label-info");
+                            $(".not-collected").html( response.notCollected.length );
+                            MakeDropdown(".not-collected-list", response.notCollected, "@Url.Action("Index", "Orders", new { status = 8 })", "label-info");
 
-                            $(".missing-items").html(response.MissingItems.length);
-                            MakeDropdown(".missing-items-list", response.MissingItems, "@Url.Action("Index", "Orders", new { status = 99 })", "label-important");
+                            $(".missing-items").html(response.missingItems.length);
+                            MakeDropdown(".missing-items-list", response.missingItems, "@Url.Action("Index", "Orders", new { status = 99 })", "label-important");
 
                         },
                         error: function (response) {
@@ -258,14 +258,15 @@
                         dataType: "json",
                         traditional: true,
                         success: function (response) {
-                            if (response.status == 1) {
+                            if (response.status === 1) {
                                 return true;
                             } else {
                                 alert(response.msg);
                                 return false;
                             }
                         },
-                        error: function (response) {
+                        error: function (error) {
+                            console.log(error);
                             alert("Unknown error!");
                             return false;
                         }
@@ -282,7 +283,7 @@
                         dataType: "json",
                         traditional: true,
                         success: function (response) {
-                            if (response.status == 1) {
+                            if (response.status === 1) {
                                 return true;
                             } else {
                                 alert(response.msg);
