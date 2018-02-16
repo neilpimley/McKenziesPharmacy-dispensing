@@ -118,7 +118,7 @@ namespace Pharmacy.Dispensing.Controllers
                 // Default to ordered status
                 status = 2;
             }
-            var titles = await _unitOfWork.TitleRepository.Get();
+            var titles = _unitOfWork.TitleRepository.Get().Result;
             var orders = from o in await _unitOfWork.OrderRepository.Get()
                          join c in await _unitOfWork.CustomerRepository.Get() on o.CustomerId equals c.CustomerId
                          join s in await _unitOfWork.ShopRepository.Get() on c.ShopId equals s.ShopId
@@ -164,7 +164,7 @@ namespace Pharmacy.Dispensing.Controllers
                                  Shop = s
                              }
                          };
-            return View(orders.ToList());
+            return View(orders);
         }
 
         private async Task<bool> SendAlertToDriver(string drivername, CollectScript script)
@@ -223,17 +223,17 @@ namespace Pharmacy.Dispensing.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetOrderTotals()
+        public async Task<JsonResult> GetOrderTotals()
         {
             // Get orders added by customer via the website that scripts need collected for
-            var allScripts = (from o in _unitOfWork.OrderRepository.Get().Result
-                              join c in _unitOfWork.CustomerRepository.Get().Result on o.CustomerId equals c.CustomerId
-                              join d in _unitOfWork.DoctorRepository.Get().Result on c.DoctorId equals d.DoctorId
+            var allScripts = (from o in await _unitOfWork.OrderRepository.Get()
+                              join c in await _unitOfWork.CustomerRepository.Get() on o.CustomerId equals c.CustomerId
+                              join d in await _unitOfWork.DoctorRepository.Get() on c.DoctorId equals d.DoctorId
                               select new
                               {
                                   OrderStatus = o.OrderStatus,
                                   Customer = c.Firstname + " " + c.Lastname,
-                                  NumItems = _unitOfWork.OrderLineRepository.Get(filter: n => n.OrderId == o.OrderId).Result.Count(),
+                                  NumItems = _unitOfWork.OrderLineRepository.Get(n => n.OrderId == o.OrderId).Result.Count()
                               }).ToList().Select(x => new CollectScript
                               {
                                   OrderStatus = x.OrderStatus,
@@ -242,9 +242,9 @@ namespace Pharmacy.Dispensing.Controllers
                               }).ToList();
 
             // Get scripts that need collected for shops
-            var shopScripts = (from col in _unitOfWork.CollectScriptRepository.Get().Result
-                               join d in _unitOfWork.DoctorRepository.Get().Result on col.DoctorId equals d.DoctorId
-                               join p in _unitOfWork.PracticeRepository.Get().Result on d.PracticeId equals p.PracticeId
+            var shopScripts = (from col in await _unitOfWork.CollectScriptRepository.Get()
+                               join d in await _unitOfWork.DoctorRepository.Get() on col.DoctorId equals d.DoctorId
+                               join p in await _unitOfWork.PracticeRepository.Get() on d.PracticeId equals p.PracticeId
                                select col).ToList();
 
 

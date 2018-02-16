@@ -1,0 +1,31 @@
+{
+  "name": "pharmacy.dispensing",
+  "homepage": "https://github.com/neilpimley/McKenziesPharmacy-dispensing",
+  "description": "Back office application for prescription re-ordering application",
+  "main": "",
+  "authors": [
+    "n.pimley"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-ui": "1.12.1",
+    "bootstrap-switch": "v3.3.4",
+    "jquery-validation": "1.17.0",
+    "jquery-validation-unobtrusive": "v3.2.6",
+    "font-awesome": "fortawesome-font-awesome#v4.7.0",
+    "jquery.gritter": "1.7.4",
+    "jquery": "3.3.1",
+    "bootstrap": "v3.3.7"
+  },
+  "resolutions": {
+    "jquery": "3.3.1"
+  }
+}

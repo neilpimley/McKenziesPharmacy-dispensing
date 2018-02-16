@@ -82,7 +82,8 @@
             @Html.DisplayFor(modelItem => item.Address.AddressLine1)
         </td>
         <td>
-            @**tml.ActionLink(item.Doctor.Title.TitleName + " " + item.Doctor.Surname,"Details","Doctor", new { id =  item.Doctor.DoctorId }, new { title = "click to view doctors details" })*@
+            @*Html.ActionLink(item.Doctor.Title.TitleName + " " + item.Doctor.Surname,"Details","Doctor", new { id =  item.Doctor.DoctorId }, new { title = "click to view doctors details" })*@
+            Dr. @item.Doctor.Surname
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Shop.ShopName)

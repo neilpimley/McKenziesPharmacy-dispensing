@@ -1,4 +1,4 @@
-﻿@model List<ViewOrder>
+﻿@model IEnumerable<ViewOrder>
 @{
     ViewBag.Title = "Orders " + ViewBag.TitleExt;
     Layout = "~/Views/Shared/_InnerLayout.cshtml";
@@ -35,7 +35,7 @@
             @Html.DisplayFor(modelItem => item.Order.OrderDate)
         </td>
         <td>
-            @Html.ActionLink(item.Customer.Title + " " + item.Customer.Firstname + " " + item.Customer.Lastname, "Details", "AdminCustomer", new { id = item.Customer.UserId }, new { title = "click to view customer details" })
+            @Html.ActionLink(item.Customer.Title.TitleName + " " + item.Customer.Firstname + " " + item.Customer.Lastname, "Details", "AdminCustomer", new { id = item.Customer.UserId }, new { title = "click to view customer details" })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Shop.ShopName)

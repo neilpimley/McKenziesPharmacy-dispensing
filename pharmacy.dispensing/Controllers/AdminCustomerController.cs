@@ -35,7 +35,7 @@ namespace Pharmacy.Dispensing.Controllers
                 join a in await _unitOfWork.AddressRepository.Get() on c.AddressId equals a.AddressId
                 join d in await _unitOfWork.DoctorRepository.Get() on c.DoctorId equals d.DoctorId
                 join t in titles on c.TitleId equals t.TitleId
-                join dt in titles on c.TitleId equals dt.TitleId
+                join dt in titles on d.TitleId equals dt.TitleId
                 join s in await  _unitOfWork.ShopRepository.Get() on c.ShopId equals s.ShopId
                 select new CustomerPoco() {
                     Email = c.Email,
