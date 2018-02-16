@@ -6,99 +6,103 @@
 }
 
 
-
 @using (Html.BeginForm("Edit", "AdminCustomer", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    @Html.ValidationSummary(true)
-        
-        @Html.HiddenFor(model => model.CustomerId)
-        @Html.HiddenFor(model => model.UserId)
+    <div asp-validation-summary="All"></div>
+
+        <input asp-for="CustomerId" type="hidden" />
+        <input asp-for="AddressId" type="hidden" />
+        <input asp-for="ShopId" type="hidden" />
+        <input asp-for="UserId" type="hidden" />
+        <input asp-for="CreatedOn" type="hidden" />
 
         <div class="form-group">
-	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Email)</label>
+            <label class="col-md-3 control-label" asp-for="Email"></label>
             <div class="col-md-3">
-                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", required = "" })
-                @Html.ValidationMessageFor(m => m.Email, "Please enter a customers email")
+                <input asp-for="Email" type="text" class="form-control" readonly />
             </div>
         </div>
 
         <div class="form-group">
-	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Title)</label>
-	        <div class="col-md-1">
-                 @Html.DropDownList("TitleId", null, "--choose--", new { @class = "form-control", required = "" })
-                 @Html.ValidationMessageFor(m => m.TitleId, "Please choose a title")
-            </div>
-            <div class="col-md-2">
-                @Html.TextBoxFor(model => model.Firstname, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Firstname, "Please enter the customers first name")
-            </div>
-            <div class="col-md-2">
-                @Html.TextBoxFor(model => model.Lastname, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Lastname, "Please enter the customers last name")
-            </div>
-        </div>
-
-         <div class="form-group">
-	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Sex)</label>
+            <label class="col-md-3 control-label" asp-for="Title"></label>
             <div class="col-md-1">
-                @Html.TextBoxFor(model => model.Sex, new { @class = "form-control", required = "" })
-                @Html.ValidationMessageFor(m => m.Sex, "Please enter a customers gender")
+                <select asp-for="TitleId" class="form-control" asp-items="@(ViewBag.Titles)"></select>  
+               <span asp-validation-for="TitleId">Please choose a title</span>
             </div>
-
-        </div>
-        <div class="form-group">
-	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Mobile)</label>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", required = "" })
-                @Html.ValidationMessageFor(m => m.Mobile)
+                <input asp-for="Firstname" type="text" class="form-control" required />
+                <span asp-validation-for="Firstname">Please enter the customers first name</span>
+            </div>
+            <div class="col-md-2">
+                <input asp-for="Lastname" type="text" class="form-control" required />
+                <span asp-validation-for="Lastname">Please enter the customers last name</span>
             </div>
         </div>
 
          <div class="form-group">
-	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Home)</label>
+             <label class="col-md-3 control-label" asp-for="Sex"></label>
+            <div class="col-md-1">
+                <input asp-for="Sex" type="text" class="form-control" required />
+                <span asp-validation-for="Sex">Please enter a customers gender</span>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" asp-for="Mobile"></label>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.Home, new { @class = "form-control", required = "" })
-                @Html.ValidationMessageFor(m => m.Home)
+                <input asp-for="Mobile" type="text" class="form-control" required />
+                <span asp-validation-for="Mobile"></span>
+            </div>
+        </div>
+
+         <div class="form-group">
+             <label class="col-md-3 control-label" asp-for="Home"></label>
+            <div class="col-md-2">
+                <input asp-for="Home" type="text" class="form-control" required />
+               <span asp-validation-for="Home"></span>
             </div>
         </div>
          
          <div class="form-group">
-	        <label class="col-md-3 control-label">@Html.LabelFor(model => model.Dob)</label>
+             <label class="col-md-3 control-label" asp-for="Dob"></label>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.Dob, new { @class = "form-control", required = "" })
-                @Html.ValidationMessageFor(m => m.Dob)
+                <input asp-for="Dob" type="text" class="form-control" required />
+                <span asp-validation-for="Dob"></span>
             </div>
         </div>
 
 
         <div class="form-group">
-            <label class="col-md-3 control-label">@Html.LabelFor(model => model.AddressId, "Address")</label>
+            <label class="col-md-3 control-label" asp-for="Address"></label>
             <div class="col-md-2">
-                @Html.DropDownList("AddressId", null, "--choose--", new { @class = "form-control", required = "" })
+                <input asp-for="Address.AddressLine1" type="text" class="form-control" required />
+                <input asp-for="Address.AddressLine2" type="text" class="form-control" required />
+                <input asp-for="Address.AddressLine3" type="text" class="form-control" required />
+                <input asp-for="Address.Postcode" type="text" class="form-control" required />
                 @Html.ValidationMessageFor(model => model.AddressId)
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-md-3 control-label">@Html.LabelFor(model => model.DoctorId, "Doctor")</label>
+            <label class="col-md-3 control-label" asp-for="Doctor"></label>
             <div class="col-md-2">
-                @Html.DropDownList("DoctorId", null, "--choose--", new { @class = "form-control", required = "" })
-                @Html.ValidationMessageFor(model => model.DoctorId)
+                <select asp-for="DoctorId" class="form-control" asp-items="@(ViewBag.Doctors)"></select>  
+                <span asp-validation-for="DoctorId"></span>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-md-3 control-label">@Html.LabelFor(model => model.Active)</label>
+            <label class="col-md-3 control-label" asp-for="Active"></label>
             <div class="col-md-2">
                 @Html.EditorFor(model => model.Active, null, new { @class = "form-control", required = "" })
-                @Html.ValidationMessageFor(model => model.Active)
+                <span asp-validation-for="Active"></span>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-2 col-md-offset-3">
-                <button class="btn btn-success active">Save</button>
-                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary", role = "button" })
+                <button class="btn btn-success active" type="submit">Save</button>
+                @Html.ActionLink("Back to List", "Index", "AdminCustomer",  null, new { @class = "btn btn-primary", role = "button" })
             </div>
         </div>
     

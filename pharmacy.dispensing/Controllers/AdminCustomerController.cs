@@ -37,7 +37,8 @@ namespace Pharmacy.Dispensing.Controllers
                 join t in titles on c.TitleId equals t.TitleId
                 join dt in titles on d.TitleId equals dt.TitleId
                 join s in await  _unitOfWork.ShopRepository.Get() on c.ShopId equals s.ShopId
-                select new CustomerPoco() {
+                select new CustomerPoco {
+                    CustomerId = c.CustomerId,
                     Email = c.Email,
                     Firstname = c.Firstname,
                     Lastname = c.Lastname,
@@ -56,7 +57,7 @@ namespace Pharmacy.Dispensing.Controllers
                         Surname = d.Surname
                     },
                     Shop = s
-                }).ToList();
+                });
 
             return View(customers);
         }
@@ -66,7 +67,11 @@ namespace Pharmacy.Dispensing.Controllers
 
         public async Task<IActionResult> Details(Guid id)
         {
-            var customer = await _unitOfWork.CustomerRepository.GetByID(id);
+            var customer = _mapper.Map<CustomerPoco>(await _unitOfWork.CustomerRepository.GetByID(id));
+            customer.Title = await _unitOfWork.TitleRepository.GetByID(customer.TitleId);
+            customer.Address = await _unitOfWork.AddressRepository.GetByID(customer.AddressId);
+            customer.Shop = await _unitOfWork.ShopRepository.GetByID(customer.ShopId);
+            customer.Doctor = await _unitOfWork.DoctorRepository.GetByID(customer.DoctorId);
             return View(customer);
         }
 
@@ -77,9 +82,9 @@ namespace Pharmacy.Dispensing.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var customer = _mapper.Map<CustomerPoco>(await _unitOfWork.CustomerRepository.GetByID(id));
-            ViewBag.AddressID = new SelectList(await _unitOfWork.AddressRepository.Get(), "AddressID", "AddressLine1", customer.AddressId);
-            ViewBag.DoctorID = new SelectList(await _unitOfWork.DoctorRepository.Get(), "DoctorID", "Firstname", customer.DoctorId);
-            ViewBag.TitleID = new SelectList(await _unitOfWork.TitleRepository.Get(), "TitleID", "TitleName", customer.TitleId);
+            customer.Address = await _unitOfWork.AddressRepository.GetByID(customer.AddressId);
+            ViewBag.Titles = new SelectList(await _unitOfWork.TitleRepository.Get(), "TitleId", "TitleName", customer.TitleId);
+            ViewBag.Doctors = new SelectList(await _unitOfWork.DoctorRepository.Get(), "DoctorId", "Surname", customer.DoctorId);
             return View(customer);
         }
 
@@ -87,18 +92,19 @@ namespace Pharmacy.Dispensing.Controllers
         // POST: /Customer/Edit/5
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Customer customer)
+        public async Task<IActionResult> Edit(CustomerPoco customer)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.CustomerRepository.Update(customer);
-                //db.ObjectStateManager.ChangeObjectState(customer, EntityState.Modified);
-                _unitOfWork.Save();
+                var _customer = _mapper.Map<Customer>(customer);
+                _customer.ModifiedOn = DateTime.Now;
+                _unitOfWork.CustomerRepository.Update(_customer);
+                _unitOfWork.AddressRepository.Update(customer.Address);
+                await _unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.AddressID = new SelectList(await _unitOfWork.AddressRepository.Get(), "AddressId", "AddressLine1", customer.AddressId);
-            ViewBag.DoctorID = new SelectList(await _unitOfWork.DoctorRepository.Get(), "DoctorId", "Firstname", customer.DoctorId);
-            ViewBag.TitleID = new SelectList(await _unitOfWork.TitleRepository.Get(), "TitleId", "TitleName", customer.TitleId);
+            ViewBag.Titles = new SelectList(await _unitOfWork.TitleRepository.Get(), "TitleId", "TitleName", customer.TitleId);
+            ViewBag.Doctors = new SelectList(await _unitOfWork.DoctorRepository.Get(), "DoctorId", "Surname", customer.DoctorId);
             return View(customer);
         }
 
