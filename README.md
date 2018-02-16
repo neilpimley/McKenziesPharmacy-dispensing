@@ -1,28 +1,23 @@
-<a href="http://mckenziespharmacy.azurewebsites.net/">
-    <h2>
-        <img src="https://github.com/neilpimley/McKenziesPharmacy-ui/raw/master/src/assets/images/cross.png" height="20" />
-    McKenzies Pharmacy</h2>
-</a>
+<img src="https://github.com/neilpimley/McKenziesPharmacy-ui/raw/master/src/assets/images/cross.png" height="30" /> McKenzies Pharmacy - Prescription Re-ordering Service
+================================
 
-Prescription Re-ordering Service - Dispensing Application
-=========================================================
-
-Back Office application element for Prescription re-ordering application
+This repository contains the source code of the backoffice application for a sample Repeat Prescription Re-ordering Application designed for McKenzies Pharmacy and used by myself to try out new technologies.
 
 ![alt text](https://github.com/neilpimley/McKenziesPharmacy-dispensing/blob/master/screenshot.PNG)
-
-
-This repository contains the source code of back office element for a sample Repeat Prescription Re-ordering Application designed for McKenzies Pharmacy and used by myself to try out new technologies
-
-References core components in following NuGet package
-https://github.com/neilpimley/McKenziesPharmacy-core
-
 
 ## System Components
 
 - Web Application (.NET Core 2.0 / MVC / Razor, Azure AD)
 - Core Services ( .NET Core 2.0, EF Core - services / respositories / models)
 - Database (DB deployment project)
+
+## Dependencies 
+- Packages https://www.myget.org/F/mckenziespharmacy/api/v3/index.json
+
+## Related Source Code
+- https://github.com/neilpimley/McKenziesPharmacy-core
+
+
 
 ## Applicatoin settings required in azurewebsites
 
